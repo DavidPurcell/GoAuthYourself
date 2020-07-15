@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/davidpurcell/GoAuthYourself/app/handler"
 	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
