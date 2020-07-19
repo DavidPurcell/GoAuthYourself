@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/davidpurcell/GoAuthYourself/app/handler"
+	"github.com/davidpurcell/GoAuthYourself/config"
 	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -20,7 +21,7 @@ type App struct {
 }
 
 // Initialize initializes the app with predefined configuration
-func (a *App) Initialize() {
+func (a *App) Initialize(config *config.Config) {
 	dbURI := fmt.Sprintf("mongodb+srv://admin:Password1!@goauthyourself.znhhb.mongodb.net/Authorization?retryWrites=true&w=majority")
 
 	// Return to this later.
@@ -41,6 +42,7 @@ func (a *App) Initialize() {
 func (a *App) setRouters() {
 	// Routing for handling the projects
 	a.Get("/users", a.handleRequest(handler.GetAllUsers))
+	a.Post("/user", a.handleRequest(handler.CreateUser))
 }
 
 // Get wraps the router for GET method
