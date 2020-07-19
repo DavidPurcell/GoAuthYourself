@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/DavidPurcell/GoAuthYourself/app"
-	"github.com/DavidPurcell/GoAuthYourself/config"
+	"github.com/davidpurcell/GoAuthYourself/app"
+	"github.com/davidpurcell/GoAuthYourself/config"
 )
 
 func main() {

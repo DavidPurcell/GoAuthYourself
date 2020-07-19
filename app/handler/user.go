@@ -1,10 +1,13 @@
 package handler
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
+	"time"
 
 	model "github.com/davidpurcell/GoAuthYourself/app/models"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -22,5 +25,14 @@ func CreateUser(client *mongo.Client, w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
-	respondJSON(w, http.StatusCreated, user)
+	collection := client.Database("user").Collection("authorization")
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	res, err := collection.InsertOne(ctx, bson.M{"Id": user.Id, "Username": user.Username, "Password": user.Password})
+	if err != nil {
+		respondError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	respondJSON(w, http.StatusCreated, res)
 }
